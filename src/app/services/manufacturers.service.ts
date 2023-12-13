@@ -4,11 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { Pagable } from '../model/pageable.model';
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class ManufacturersService {
 
-  private CATG_URL =`${environment.apiBaseUrl}/manufacturers`;
+private CATG_URL =`${environment.apiBaseUrl}/manufacturers`;
 
     constructor(private httpClient: HttpClient) { }
 
