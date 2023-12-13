@@ -29,7 +29,7 @@ pipeline {
 
         stage('Docker deploy') {
             steps {
-                echo '----------------- This is a docker deployzment phase ----------'
+                echo '----------------- This is a docker deployz ment phase ----------'
                 sh '''
                 (if  [ $(docker ps -a | grep onestopmedishop-admin-container | cut -d " " -f1) ]; then \
                         echo $(docker rm -f onestopmedishop-admin-container); \
