@@ -1,0 +1,54 @@
+import { Component, OnInit } from '@angular/core';
+import { OrdersService } from '../../services/orders.service';
+import { CommonModule } from '@angular/common';
+
+@Component({
+  selector: 'app-orders',
+  standalone: true,
+  imports: [CommonModule],
+  templateUrl: './orders.component.html',
+  styleUrl: './orders.component.css'
+})
+export class OrdersComponent  implements OnInit{
+
+  public ordersList:any[]= [];
+  orderStatusIdx: number = 0;
+  orderStatus: { name: string; value: number }[] = [
+    { name: 'Placed', value: 0 },
+    { name: 'Accepted', value: 1 },
+    { name: 'Delivered', value: 2 },
+    { name: 'Cancelled', value: 3 },
+  ];
+  viewOrderBool: boolean = false;
+  viewOrderIdx: number | undefined;
+  orderModel: any;
+
+  constructor(private ordersService:OrdersService) { }
+
+  ngOnInit(): void {
+    this.ordersService.getAll().subscribe((orders)=> {
+      console.log(orders);
+      
+      this.ordersList = orders;
+    })
+  }
+
+  
+  changeOrderStatus(orderStatusIdx: number) {
+    this.orderStatusIdx = orderStatusIdx;
+  }
+
+  openViewModal(orderModel: any, viewOrderIdx: number) {
+    console.log(orderModel);    
+    this.viewOrderBool = true;
+    this.viewOrderIdx = viewOrderIdx;
+    this.orderModel = orderModel;
+  }
+
+  closeViewModal() {
+    delete this.viewOrderIdx;
+    delete this.orderModel;
+    this.viewOrderBool = false;
+  }
+  
+}

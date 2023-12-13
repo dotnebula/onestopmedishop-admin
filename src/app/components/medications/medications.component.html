@@ -1,0 +1,100 @@
+<div class="container-fluid py-3">
+    <div class="row w-100 m-0">
+        <div class="col">
+            <div class="card shadow-sm">
+                <div class="card-header bg-white border-0">
+                    <div class="row">
+                        <div class="col-12 col-sm-6">
+                            <h4>Medications</h4>
+                        </div>
+                        <div class="col-12 col-sm-6">
+                            <div class="d-flex justify-content-end align-items-center">
+                            <a type="button" class="btn btn-dark me-1" [routerLink]="['./', 'manufacturers']">Manage Manufacturers</a>
+                            <button class="btn btn-dark me-1"   (click)="openModal(medicationModal)">Add Medication</button>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-flush m-0">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Sr. No</th>
+                                <th scope="col">Medication Code</th>
+                                <th scope="col">Medication Name</th>
+                                <th scope="col">Description</th>
+                                <!-- <th scope="col">Manufacturer</th> -->
+                                <th scope="col">Price</th>
+                                <th scope="col">Actions</th>
+                              </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let medi of medicationList; index as idx">
+                                <td>{{ idx + 1 }}</td>
+                                <td>{{ medi["medicationCode"] }}</td>
+                                <td class="text-wrap">{{ medi?.medicationTitle}}</td>
+                                <td class="text-wrap">{{ medi?.medicationDescription }}</td>
+                                <td>{{ medi?.mediManufacturer?.manufacturerName }}</td>
+                                <td>{{ medi?.price| currency:'USD':'symbol':'1.0' }}</td>
+                                <td>
+                                  <button type="button" class="btn btn-sm btn-dark me-1" (click)="openImageModal(viewImageModal, medi.images, medi.thumbnailImage)" >View Images</button>
+                                  <button type="button" class="btn btn-sm btn-dark me-1" (click)="openViewModal(medicationViewModal, medi)" >View Details</button>
+                                  <button type="button" class="btn btn-sm btn-dark me-1" (click)="openModal(medicationModal, medi)" >Update</button>
+                                  <button type="button" class="btn btn-sm btn-danger me-1" (click)="delete(medi?.medicationId)" >Delete</button>
+                                  
+                                </td>
+                              </tr>                       
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- create / update product-->
+<ng-template #medicationModal let-modal>
+    <app-addmedication [medicationInfo]="medicationInfo" (closeModel)="closeModel(medicationModal)"></app-addmedication>
+</ng-template>
+
+
+<ng-template #medicationViewModal let-modal>
+    <app-viewmedication [medicationInfo]="medicationInfo" (closeModel)="closeModel(medicationViewModal)"></app-viewmedication>
+</ng-template>
+
+
+<ng-template  #viewImageModal let-modal>
+    <div class="modal-header border-0 d-flex justify-content-between align-items-center">
+        <h3>Images</h3>
+        <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss()">
+          <!-- <span aria-hidden="true">&times;</span> -->
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-12 col-sm-2 px-0 border-right verticalScroll">
+            <ul class="list-group list-group-flush">
+              <li class="list-hover list-group-item" *ngFor="let imgSrc of tempImageFiles; index as idx"
+                (click)="selectedImageIdx = idx">
+                <div class="position-absolute mt-2" *ngIf="thumbnailImageIdx === idx">
+                  <h4 class="badge rounded-pill bg-secondary">Thumbnail Image</h4>
+                </div>
+                <img [src]="imgSrc" [alt]="imgSrc" class="img-fluid rounded shadow-sm" height="64px" loading="lazy">
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 col-sm-10">
+            <div class="sticky-top">
+              <img [src]="tempImageFiles[selectedImageIdx]" [alt]="tempImageFiles[selectedImageIdx]"
+                class="img-fluid shadow-sm img-style" loading="lazy" title="View Full Image" 
+                (click)="openImage(tempImageFiles[selectedImageIdx])">
+            </div>
+          </div>
+        </div>
+        <!-- <div class="col-12 d-flex align-items-center justify-content-center">
+          <img [src]="imageUrl" class="img-fluid shadow-sm" alt="" style="height: 25em;">
+        </div> -->
+      </div>
+</ng-template>

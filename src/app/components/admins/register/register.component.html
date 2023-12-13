@@ -1,0 +1,72 @@
+<div class="container-fluid vh-100">
+    <div class="row" style="height: inherit;">
+        <div class="col-12 col-sm-6 d-flex flex-column justify-content-center align-items-start px-4" id="bg">
+            <h3 class="text-white text-uppercase m-0 mb-1">One Stop Medi Shop</h3>
+            <p class="m-0 text-white h5">Administration Dashboard</p>
+            <ul class="list-group mt-5 text-white" style="list-style-type: none; margin: 0; padding: 0;">
+              <li>This is Administration Registration Page</li>
+              <li>Provide your information to register</li>
+            </ul>
+        </div>
+        <div class="col-12 col-sm-6 d-flex flex-column align-items-center mt-5" >
+            <div class="card w-75 shadow-sm mt-5">
+                <div class="card-header bg-white border-0 mt-5">
+                    <h3 class="text-center m-0">Register</h3>
+                </div>
+                <div class="card-body">
+                    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+                        <div *ngIf="errorReponse" class=" form-group col-12 mt-2 alert alert-danger" role="alert">
+                          {{errorReponse}}
+                        </div>
+                        <div *ngIf="stReponse" class=" form-group col-12 mt-2 alert alert-success" role="alert">
+                          {{stReponse}}
+                        </div>
+
+                        <div class="form-group col-12 mt-2">
+                            <label for="fullName">First Name</label>
+                            <input type="fullName" class="form-control" id="firstlName" formControlName = "firstName" autocomplete="off" aria-describedby="firstName" placeholder="first name"
+                            required>
+                        </div>
+                        <div class="form-group col-12 mt-2">
+                          <label for="fullName">Last Name</label>
+                          <input type="fullName" class="form-control" id="lastName" formControlName = "lastName" autocomplete="off" aria-describedby="lastName" placeholder="last name"
+                          required>
+                        </div>
+                        <div class="form-group col-12 mt-2">
+                          <label for="fullName">Admin UserName</label>
+                          <input type="fullName" class="form-control" id="lastName" formControlName = "adminUserName" autocomplete="off" aria-describedby="adminUserName" placeholder="choose your admin username"
+                          required>
+                        </div>
+                        <div class="form-group col-12 mt-2">
+                          <label for="email">Email address</label>
+                          <input type="email" class="form-control" id="email" formControlName = "email" autocomplete="off" aria-describedby="email" placeholder="abc@example.com"
+                          required>
+                          <small id="emailHelp" class="form-text text-muted">We keep your information private.</small>
+                        </div>
+                        <div class="form-group col-12 mt-2">
+                        
+                          <label for="password">Password</label>
+                          <input type="password" class="form-control" autocomplete="off" id="password" formControlName = "password" placeholder="enter your password" required>
+                        <p style="color:red;" class="help-block" *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.touched">
+                              Password must have at least 8 characters. </p>
+                        </div>
+                        <div class="form-group col-12 mt-2">
+                          <label for="password">Repeat Password</label>
+                          <input  type="password" class="form-control" autocomplete="off" id="passwordConfirmation" formControlName = "passwordConfirmation" placeholder="renter your password" required>
+                          <p class="help-block" *ngIf="registerForm.get('password')?.errors && registerForm.get('password')?.touched">
+                            <span  class="help-block" *ngIf="registerForm.get('password') !== registerForm.get('passwordConfirmation')">Password and Confirm Pasword do not match</span>
+                          </p>
+                        </div>
+                        <div class="form-group form-check mt-3">
+                          <input type="checkbox" class="form-check-input" id="remember" required>
+                          <label class="form-check-label" for="remember">Remember me</label>
+                          
+                        </div>
+                        <button type="submit" class="btn btn-dark mt-3">Register</button><a style="float: right" routerLink="/auth/login" class="btn btn-success mt-3" routerLinkActive>Or Sign In Here</a>
+                      </form>
+                  </div>
+                  
+            </div>
+        </div>
+    </div>
+</div>

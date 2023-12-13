@@ -1,0 +1,104 @@
+<div class="modal-header">
+    <h4 class="modal-title">Medication {{ updation ? 'Updation' : 'Creation' }}</h4>
+    <button type="button" class="btn-close" aria-label="Close" id="closeAddNewStaffModal" #closeAddNewStaffModal
+    (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <form [formGroup]="medicationForm" ngNativeValidate (ngSubmit)="onSubmit()">
+    <div class="modal-body">
+      <div class="row">
+        <div class="col-12 col-sm-4">
+          <div class="form-group m-0 mb-2">
+            <label for="name" class="text-sm">Medication Code</label>
+            <input type="text" name="medicationCode" formControlName="medicationCode" class="form-control" placeholder="Medication Code" required>
+          </div>
+
+          <div class="form-group m-0 mb-2">
+            <label for="name" class="text-sm">Medication Name</label>
+            <input type="text" name="medicationTitle" formControlName="medicationTitle" class="form-control" placeholder="Medicationt Name" required>
+          </div>
+
+          <div class="form-group m-0 mb-2">
+            <label for="name" class="text-sm">Medication Manufacturer</label>
+            <select id="name" name="mediManufacturer" class="form-select shadow-none form-control" formControlName="mediManufacturer"
+              [compareWith]="compareByManufacturerId" (selectedValueChange)="onSelectOption($event)" required>
+              <option *ngFor="let manufacturer of manufacturerList; index as idx" [ngValue]="manufacturer">
+                  {{ manufacturer.manufacturerName }}
+              </option>
+            </select>
+          </div>
+
+          <div class="form-group m-0 mb-2">
+            <label for="price" class="text-sm">Price</label>
+            <input type="number" name="price" formControlName="price" class="form-control" placeholder="Price" min="1" required>
+          </div>
+          
+        </div>
+        <div class="col-12 col-sm-8">
+          <div class="form-group m-0 mb-2">
+            <label for="description" class="text-sm">Description</label>
+            <textarea id="description" name="medicationDescription" id="adress" rows="4" class="form-control"
+              formControlName="medicationDescription"></textarea>
+          </div>
+          <div class="col-12 px-0">
+            <div class="d-flex flex-column">
+              <div class="d-flex justify-content-between align-items-center">
+                <h4 class="m-0">Medication Images</h4>
+                <input type="file" #file (change)="checkImageFileType($event)" multiple hidden>
+                <button type="button" class="btn btn-sm btn-dark" (click)="file.click()">
+                  Add
+                </button>
+              </div>
+            </div>
+            <div class="row mt-2" *ngIf="tempImageFiles.length == 0">
+              <div class="col-12" style="height: 40px;">
+                <div class="d-flex flex-column align-items-center justify-content-center">
+                  <span class="material-icons" style="font-size: 26px;">warning</span>
+                  <h4 class="m-0 mt-1">No Images</h4>
+                </div>
+              </div>
+            </div>
+            <div class="row mt-3" *ngIf="tempImageFiles.length != 0">
+              <div class="col-12 my-2" *ngFor="let imageFile of tempImageFiles; index as idx">
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex flex-column">
+                    <p class="m-0 mb-1">
+                      <strong>{{ idx + 1 }}</strong>. 
+                      {{ imageFile.name || imageFile }}
+                    </p>
+                    <span *ngIf="medicationForm.get('thumbnailImage')?.value === idx" class="text-sm text-muted">
+                      Selected as Thumbnail Image
+                    </span>
+                  </div>
+                  <div class="d-flex align-items-center">
+                    <button type="button" class="btn btn-primary btn-sm mr-2" (click)="changeThumbnailImageIdx(idx)"
+                      [ngClass]="{
+                      'btn-success': medicationForm.get('thumbnailImage')?.value === idx
+                    }">
+                      {{ medicationForm.get('thumbnailImage')?.value === idx ? 'Selected' : 'Select' }}
+                    </button>
+                    <button type="button" class="btn btn-danger btn-sm" (click)="removeImage(idx)">
+                      Remove
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default btn-sm"  (click)="close()">
+        Cancel
+      </button>
+      <button type="submit" class="btn btn-dark btn-sm" [disabled]="loader">
+        Save
+        <span *ngIf="loader">&nbsp;</span>
+        <div *ngIf="loader" class="spinner-border spinner-border-sm text-white" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </button>
+    </div>
+  </form>

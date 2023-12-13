@@ -1,0 +1,42 @@
+<div class="container-fluid vh-100">
+    <div class="row" style="height: inherit;">
+        <div class="col-12 col-sm-6 d-flex flex-column justify-content-center align-items-start px-4" id="bg">
+            <h3 class="text-white text-uppercase m-0 mb-1">One Stop Medi Shop</h3>
+            <p class="m-0 text-white h5">Administration Dashboard</p>
+            <ul class="list-group mt-5 text-white" style="list-style-type: none; margin: 0; padding: 0;">
+                <li>This is Administration Login Page</li>
+                <li>Use you crudentials to access your Dashboard</li>
+            </ul>
+        </div>
+        <div class="col-12 col-sm-6 d-flex flex-column align-items-center mt-5" >
+            <div class="card w-75 shadow-sm mt-5">
+                <div class="card-header bg-white border-0 mt-5">
+                    <h3 class="text-center m-0">Login</h3>
+                  </div>
+                <div class="card-body">
+                    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+                      <div *ngIf="errorReponse" class=" form-group col-12 mt-2 alert alert-danger" role="alert">
+                        {{errorReponse}}
+                      </div>
+                        <div class="form-group col-12 mt-2">
+                          <label for="email">Email address</label>
+                          <input type="email" class="form-control" id="email"  autocomplete="off" formControlName = "email" aria-describedby="email" placeholder="abc@example.com"
+                          required>
+                          <small id="emailHelp" class="form-text text-muted">We keep your information private</small>
+                        </div>
+                        <div class="form-group col-12 mt-2">
+                          <label for="password">Password</label>
+                          <input type="password" class="form-control" autocomplete="off" id="password" formControlName = "password" placeholder="enter your password" required>
+                        </div>
+                        <div class="form-group form-check mt-3">
+                          <input type="checkbox" class="form-check-input" id="remember" required>
+                          <label class="form-check-label" for="remember">Remember me</label>
+                        </div>
+                        <button type="submit" class="btn btn-dark mt-3">LogIn</button><a style="float: right" routerLink="/auth/register" class="btn btn-success mt-3">Or Register Here</a>
+                      </form>
+                      
+                  </div>
+            </div>
+        </div>
+    </div>
+</div>
