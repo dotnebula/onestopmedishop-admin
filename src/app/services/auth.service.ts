@@ -20,7 +20,6 @@ export class AuthService {
     return this.httpClient.post<any[]>(`${environment.apiBaseUrl}/admins`, userObj);
   }
   
-
   isLoggedIn():boolean {
     let authToken = localStorage.getItem('x-auth-token');
     let adminId = localStorage.getItem('x-admin-id');
