@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  apiBaseUrl :'ec2-18-188-94-121.us-east-2.compute.amazonaws.com:8083/medi'
+  apiBaseUrl :'http://ec2-18-188-94-121.us-east-2.compute.amazonaws.com:8083/medi'
   // apiBaseUrl :'http://localhost:8083/medi'
 };
 
